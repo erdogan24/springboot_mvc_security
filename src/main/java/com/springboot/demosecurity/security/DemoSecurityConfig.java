@@ -13,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class DemoSecurityConfig {
 
     @Bean
-    public InMemoryUserDetailsManager userDetailsManager(){
+    public InMemoryUserDetailsManager userDetailsManager() {
 
 
         UserDetails Erdogan = User.builder()
@@ -26,31 +26,33 @@ public class DemoSecurityConfig {
         UserDetails Ahmet = User.builder()
                 .username("Ahmet")
                 .password("{noop}test123")
-                .roles("EMPLOYEE","MANAGER")
+                .roles("EMPLOYEE", "MANAGER")
                 .build();
 
 
         UserDetails Hasan = User.builder()
                 .username("Hasan")
                 .password("{noop}test123")
-                .roles("EMPLOYEE","MANAGER","ADMIN")
+                .roles("EMPLOYEE", "MANAGER", "ADMIN")
                 .build();
 
-        return new InMemoryUserDetailsManager(Erdogan,Ahmet,Hasan);
+        return new InMemoryUserDetailsManager(Erdogan, Ahmet, Hasan);
     }
 
     @Bean
-    public SecurityFilterChain filterChain (HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(configer ->
-                configer
-                        .anyRequest().authenticated()
-        )
-         .formLogin(form ->
-                 form
-                         .loginPage("/showMyLoginPage")
-                         .loginProcessingUrl("/authenticateTheUser")
-                         .permitAll()
-         );
+                        configer
+                                .anyRequest().authenticated()
+                )
+                .formLogin(form ->
+                        form
+                                .loginPage("/showMyLoginPage")
+                                .loginProcessingUrl("/authenticateTheUser")
+                                .permitAll()
+                )
+                .logout(logout -> logout.permitAll()
+                );
         return http.build();
     }
 }
