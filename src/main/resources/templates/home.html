@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Erdogan Home Page</title>
@@ -14,12 +15,31 @@
     Welcome to the Erdogan Akpolat home page!
 </p>
 
+<hr>
+
+<!-- display user name and role -->
+
+<p>
+    User: <span sec:authentication="principal.username"></span>
+    <br><br>
+    Role(s): <span sec:authentication="principal.authorities"></span>
+</p>
+
+<hr>
+<!--Add a ling to point to /leaders ... this is for the managers -->
+<p>
+    <a th:href="@{/leaders}"> Leadership Meeting</a>
+    (Only for Manager peeps)
+</p>
+
+<hr>
+
 
 <!--Add a logout button -->
 <form action="#" th:action="@{/logout}" method="POST">
-
     <input type="submit" value="logout"/>
 </form>
+
 
 </body>
 </html>
